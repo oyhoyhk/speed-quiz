@@ -1,24 +1,20 @@
 import { Paper, Stack } from "@mui/material";
 import data from "../../db/data.json";
 import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+  const navigator = useNavigate();
   return (
     <Stack>
       {Object.keys(data).map((item) => (
-        <Item data-testid="item" key={item}>
-          <Link
-            style={{
-              display: "block",
-              width: "100%",
-              height: "100%",
-              textAlign: "center",
-            }}
-            to={`/game/${item}`}
-          >
-            {item}
-          </Link>
+        <Item
+          data-testid="item"
+          key={item}
+          sx={{ padding: 0 }}
+          onClick={() => navigator("/game/" + item)}
+        >
+          {item}
         </Item>
       ))}
     </Stack>

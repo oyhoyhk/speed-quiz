@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import ModeOutlinedIcon from "@mui/icons-material/ModeOutlined";
 import { Button, Modal, TextField } from "@mui/material";
@@ -38,7 +38,23 @@ export default function Layout() {
     setProblemCount(value.problemCount);
     setTimer(value.timer);
     setToggle(false);
+    localStorage.setItem("timer", value.timer);
+    localStorage.setItem("problemCount", value.problemCount);
   };
+
+  useEffect(() => {
+    const timer = localStorage.getItem("timer");
+    const problemCount = localStorage.getItem("problemCount");
+    if (timer) {
+      setTimer(Number(timer));
+      setValue((prev) => ({ ...prev, timer: Number(timer) }));
+    }
+    if (problemCount) {
+      setProblemCount(Number(problemCount));
+      setValue((prev) => ({ ...prev, problemCount: Number(problemCount) }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div
